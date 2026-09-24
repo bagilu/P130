@@ -1,3 +1,28 @@
+// Password visibility controls: also work before account configuration is ready.
+(() => {
+  const fields = document.querySelectorAll('input[type="password"]');
+  fields.forEach(input => {
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:8px';
+    input.parentNode.insertBefore(row,input);
+    row.appendChild(input);
+    input.style.minWidth='0';input.style.flex='1';
+    const button=document.createElement('button');
+    button.type='button';button.textContent='顯示密碼';
+    button.style.cssText='width:auto;flex-shrink:0;margin:0;white-space:nowrap';
+    button.setAttribute('aria-controls',input.id);
+    button.setAttribute('aria-pressed','false');
+    row.appendChild(button);
+    const hide=()=>{input.type='password';button.textContent='顯示密碼';button.setAttribute('aria-pressed','false');};
+    button.addEventListener('click',()=>{
+      const show=input.type==='password';input.type=show?'text':'password';
+      button.textContent=show?'隱藏密碼':'顯示密碼';button.setAttribute('aria-pressed',String(show));
+    });
+    input.form?.addEventListener('submit',hide);
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)hide();});
+    window.addEventListener('pagehide',hide);
+  });
+})();
 (() => {
   const config = window.P130_CONFIG;
   const warning = document.querySelector('#configWarning');
