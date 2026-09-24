@@ -29,7 +29,7 @@
         <label>Email<input id="signinEmail" type="email" autocomplete="email" required></label>
         <label>密碼 <small>Password</small><input id="signinPassword" type="password" autocomplete="current-password" minlength="8" required></label>
         <button class="primary" type="submit">登入 Sign in</button>
-        <button class="link-button" type="button" data-view="forgot">忘記密碼？ Forgot password?</button>
+        <a class="link-button" href="forgot-password.html">忘記密碼？ Forgot password?</a>
       </form>
       <form id="signupForm" class="view">
         <h2>建立帳號 <small>Create account</small></h2>
@@ -38,18 +38,6 @@
         <label>密碼 <small>At least 8 characters</small><input id="signupPassword" type="password" autocomplete="new-password" minlength="8" required></label>
         <button class="primary" type="submit">送出驗證信 Send verification email</button>
         <p class="hint">完成 Email 驗證後，帳號可登入；各專案仍各自決定使用資格。</p>
-      </form>
-      <form id="forgotForm" class="view">
-        <h2>忘記密碼 <small>Reset password</small></h2>
-        <p class="hint">我們會寄送安全連結到您的 Email。</p>
-        <label>Email<input id="forgotEmail" type="email" autocomplete="email" required></label>
-        <button class="primary" type="submit">寄送重設連結 Send reset link</button>
-        <button class="link-button" type="button" data-view="signin">回到登入 Back to sign in</button>
-      </form>
-      <form id="recoveryForm" class="view">
-        <h2>設定新密碼 <small>Set new password</small></h2>
-        <label>新密碼 <small>At least 8 characters</small><input id="recoveryPassword" type="password" autocomplete="new-password" minlength="8" required></label>
-        <button class="primary" type="submit">更新密碼 Update password</button>
       </form>
       <section id="accountView" class="view">
         <h2>帳號設定 <small>Account settings</small></h2>
@@ -64,6 +52,6 @@
   <footer>SBI Lab P130 · 帳號共用，權限分開<br><span>Shared identity, project-specific authorization.</span></footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20260924-1"></script>
 </body>
 </html>
