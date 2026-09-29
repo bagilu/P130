@@ -23,11 +23,34 @@
 
   const resetUrl = new URL('reset-password.html', getBaseUrl()).href;
   const notice = document.querySelector('#notice');
+  const submitButton = document.querySelector('#forgotSubmit');
+  const cooldown = document.querySelector('#forgotCooldown');
+  const EMAIL_COOLDOWN_SECONDS = 60;
 
   function message(text, error = false) {
     notice.textContent = text;
     notice.className = `notice${error ? ' error' : ''}`;
     notice.hidden = false;
+  }
+
+  function startEmailCooldown() {
+    let remaining = EMAIL_COOLDOWN_SECONDS;
+    submitButton.disabled = true;
+    cooldown.hidden = false;
+    const render = () => {
+      cooldown.textContent = `為避免重複寄信，請等待 ${remaining} 秒後再申請。 / Please wait ${remaining} seconds before requesting another email.`;
+    };
+    render();
+    const timer = window.setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        window.clearInterval(timer);
+        submitButton.disabled = false;
+        cooldown.hidden = true;
+        return;
+      }
+      render();
+    }, 1000);
   }
 
   document.querySelector('#forgotForm').addEventListener('submit', async e => {
@@ -37,6 +60,7 @@
       redirectTo: resetUrl
     });
     if (error) return message('無法寄送重設信：' + error.message, true);
-    message('若此 Email 已註冊，重設密碼連結已寄出。請查看信箱。');
+    message('若此 Email 已註冊，重設密碼連結已寄出。請檢查收件匣、垃圾郵件匣與「促銷內容」分類。');
+    startEmailCooldown();
   });
 })();
